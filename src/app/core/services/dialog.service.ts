@@ -27,7 +27,7 @@ export class DialogService implements OnInit {
   public rowNumber: any;
   public memberSinceDate: string;
   public todaysDate: string;
-  public isEditMode: boolean;
+  private isEditMode: boolean;
 
   constructor(
     private dialog: MatDialog,
@@ -35,13 +35,16 @@ export class DialogService implements OnInit {
     public httpService: HttpService,
     private dateFormatPipe: DateFormatPipe,
     private applicationRef: ApplicationRef
-  ) { }
+  ) { console.log('onInit in dialog'); }
 
   ngOnInit() {
     this.subscriptions.push(
       this.httpService.getMembers().subscribe(members => {
         this.rows = members;
       }));
+
+
+    console.log('edit mode in dialog is ', this.httpService);
   }
 
   formatMemberSinceDate(value: Date) {
@@ -49,14 +52,17 @@ export class DialogService implements OnInit {
   }
 
   openMemberDetailDialog(memberData?: IClubMember) {
-    if (this.isEditMode) {
-      memberData.editMode = true;
+    this.httpService.editMode.subscribe(mode => {
+      this.isEditMode = mode;
+    });
+    console.log('edit in openMember', this.isEditMode);
+    let dialogConfig = new MatDialogConfig();
+    if (!this.isEditMode) {
+      dialogConfig.width = '690px';
+      dialogConfig.height = '530px';
+      dialogConfig.disableClose = false;
+      dialogConfig.autoFocus = true;
     }
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '690px';
-    dialogConfig.height = '530px';
-    dialogConfig.disableClose = false;
-    dialogConfig.autoFocus = true;
     if (this.isEditMode) {
       dialogConfig.data = memberData;
       dialogConfig.autoFocus = false;
@@ -65,7 +71,7 @@ export class DialogService implements OnInit {
   }
 
   openDeleteDialog(data: any) {
-    const dialogConfig = new MatDialogConfig();
+    let dialogConfig = new MatDialogConfig();
     dialogConfig.width = '400px';
     dialogConfig.height = '220px';
     dialogConfig.disableClose = true;

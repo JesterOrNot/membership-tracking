@@ -3,7 +3,8 @@ import { Router } from "@angular/router";
 import { catchError, tap } from "rxjs/operators";
 import { HttpErrorResponse, HttpClient, HttpHeaders } from "@angular/common/http";
 import { IClubMember } from "../../shared/models/club-member.model";
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, Subject } from 'rxjs';
+import { AngularFireList, AngularFireObject , AngularFireDatabase } from '@angular/fire/database';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,7 +20,8 @@ const httpOptions = {
 export class HttpService {
   private subscriptions: Subscription[] = [];
   // restApi = "http://localhost:27017";
-  restApi = "http://localhost:3000";
+  // restApi = "http://localhost:3000";
+  restApi = "https://club-members-fbc.firebaseio.com/members.json";
   // restApi = "https://3000-e415c16d-76d4-4a4c-997c-383f6cf9275b.ws-us02.gitpod.io:3000"
   // restApi = "https://members-929a.restdb.io/rest/club-members"
   // restdbKey = "?apikey=5e2508ae4327326cf1c91944"
@@ -29,19 +31,25 @@ export class HttpService {
   // private corsApiKey = "5e2508ae4327326cf1c91944";
 
   newRows$ = new BehaviorSubject<Array<any>>([]);
+  editMode = new BehaviorSubject<boolean>(null);
+  isEditMode: boolean;
 
   constructor(
     private http: HttpClient,
     private router: Router,
+    // public db: AngularFireDatabase
   ) {   }
+
+  ngOnInit() {
+
+  }
 
   // fetch all members
   getMembers(): Observable<IClubMember[]> {
     return this.http
-      .get<IClubMember[]>(`${this.restApi}/members`)
+      .get<{[key: string]: IClubMember[]}>(`${this.restApi}`)
       .pipe(
         tap(data => console.log('running getMembers', data)),
-        // console.log('url is', );
         catchError(this.handleError)
       );
   }
@@ -49,7 +57,7 @@ export class HttpService {
   // get a specific member
   getMember(id: number) {
     return this.http
-      .get<IClubMember>(`${this.restApi}/members/` + id)
+      .get<IClubMember>(`${this.restApi}/0`)
       .pipe(
         // tap(data => console.log('from get', data)),
         catchError(this.handleError)
@@ -58,8 +66,9 @@ export class HttpService {
 
   // add a new member
   addMember(memberForm) {
+    console.log('member form', memberForm);
     this.subscriptions.push(
-      this.http.post(`${this.restApi}/members`, memberForm).subscribe(
+      this.http.post(`${this.restApi}`, memberForm).subscribe(
         memberData => {
         },
         error => {

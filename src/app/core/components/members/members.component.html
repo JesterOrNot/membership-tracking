@@ -38,7 +38,7 @@
     <!-- Column templates -->
 
     <ngx-datatable-column name="Address"
-                          prop="id"
+                          prop="address"
                           [draggable]="false"
                           [minWidth]="50"
                           [maxWidth]="70"
@@ -58,10 +58,10 @@
 
     <ngx-datatable-column name="Member ID#"
                           [minWidth]="90"
-                          prop="id">
+                          prop="memberId">
       <ng-template let-row="row"
                    ngx-datatable-cell-template>
-        {{row.id}}
+        {{row.memberId}}
       </ng-template>
     </ngx-datatable-column>
 
@@ -107,7 +107,7 @@
                    ngx-datatable-cell-template>
         <i class="fas fa-edit clickable"
            matTooltip="{{edit_tooltip}}"
-           (click)="editMemberClick(row.id)"></i>
+           (click)="editMemberClick(row.memberId)"></i>
       </ng-template>
     </ngx-datatable-column>
 

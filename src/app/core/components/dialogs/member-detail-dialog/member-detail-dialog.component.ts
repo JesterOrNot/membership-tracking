@@ -8,6 +8,7 @@ import { ViewEncapsulation } from '@angular/core';
 import { PhonePipe } from '../../../../shared/pipes/phone-format.pipe';
 import { Subscription } from 'rxjs';
 import { ActivityListService } from '../../../services/activities.service'
+import { MemberNumberService } from 'src/app/core/services/member-number.service';
 
 @Component({
   selector: 'app-member-detail-dialog',
@@ -21,15 +22,16 @@ export class MemberDetailDialogComponent implements OnInit, OnDestroy {
   memberModel: IClubMember;
   memberForm: FormGroup;
   submitted = false;
-  isEditMode: boolean = false;
   memberSince: string;
   memberNumber: any;
   zipcodeResult: string = "";
   cityName: string = "";
   stateAbbr: string = "";
+  isEditMode: boolean;
   activities: any;
-  actionType: string;
+  actionType: string; //remove this
   selected = 'None';
+  nextAvailableMemberNumber: number;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -37,16 +39,25 @@ export class MemberDetailDialogComponent implements OnInit, OnDestroy {
     private httpService: HttpService,
     public zipcodeService: ZipcodeService,
     private phoneFormatPipe: PhonePipe,
-    private activityListService: ActivityListService
+    public memberNumberService: MemberNumberService
+    // private activityListService: ActivityListService
   ) { }
 
   ngOnInit() {
     this.initForm();
+    this.memberNumberService.nextAvailableMemberNumber$
+      .subscribe(number => {
+        this.nextAvailableMemberNumber = number;
+    });
+
+    this.httpService.editMode.subscribe(mode => {
+      this.isEditMode = mode;
+    })
 
     if (this.data != null) {
       if (this.data.editMode) {
         this.isEditMode = true;
-        this.memberNumber = this.data.id;
+        this.memberNumber = this.data.memberId;
         this.memberSince = this.data.memberSince;
         this.actionType = "Edit";
         this.loadEditValues(this.data);
@@ -54,17 +65,15 @@ export class MemberDetailDialogComponent implements OnInit, OnDestroy {
     }
     else { // adding a new record
       this.isEditMode = false;
-      this.memberNumber = 'Pending';
+      this.memberNumber = this.nextAvailableMemberNumber;
       this.actionType = "Add New"
       this.memberSince = new Date().toLocaleDateString();
     }
-    this.activities = this.activityListService.getActivities();
   }
 
   initForm() {
     this.memberForm = new FormGroup({
-      'id': new FormControl('Pending'),
-      'editMode': new FormControl(null),
+      'memberId': new FormControl(null),
       'memberSince': new FormControl(null),
       'favoriteActivity': new FormControl(null),
       'firstName': new FormControl(null, Validators.required),
@@ -85,8 +94,7 @@ export class MemberDetailDialogComponent implements OnInit, OnDestroy {
 
   loadEditValues(data) {
     let newValues = {
-      id: data.id,
-      editMode: data.editMode,
+      memberId: data.memberId,
       firstName: data.firstName,
       lastName: data.lastName,
       memberSince: data.memberSince,
@@ -119,7 +127,7 @@ export class MemberDetailDialogComponent implements OnInit, OnDestroy {
     }
     else { //adding a new record
       this.memberForm.patchValue({ memberSince: new Date().toLocaleDateString() });
-      this.memberForm.patchValue({ id: null });
+      this.memberForm.patchValue({ memberId: this.nextAvailableMemberNumber });
       this.httpService.addMember(this.memberForm.value);
     }
     this.httpService.refreshTable();

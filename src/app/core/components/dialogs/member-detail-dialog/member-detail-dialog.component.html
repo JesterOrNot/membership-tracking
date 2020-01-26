@@ -8,7 +8,14 @@
     <div class="row form-subtitle"
          fxLayoutGap="70px"
          fxLayoutAlign="start center">
-      <div fxFlexOffset="80px">Member ID: {{memberNumber}}</div>
+      <div fxFlexOffset="80px">Member ID: {{nextAvailableMemberNumber}}</div>
+      <!-- hide the memberId as it's not editable -->
+      <mat-form-field *ngIf="false">
+        <input matInput [hidden]
+               name="memberId"
+               formControlName="memberId"/>
+      </mat-form-field>
+
       <div fxFlexOffset="90px"> Member Since: {{memberSince | dateFormat}}</div>
     </div>
 

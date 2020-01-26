@@ -21,6 +21,8 @@ import { PhonePipe } from './shared/pipes/phone-format.pipe';
 import { PhoneMaskDirective } from './shared/directives/phone-mask.directive';
 import { ActivityListService } from './core/services/activities.service'
 import { DigitOnlyModule } from '@uiowa/digit-only';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { DigitOnlyModule } from '@uiowa/digit-only';
     NgxDatatableModule,
     HttpClientModule,
     ReactiveFormsModule,
-    DigitOnlyModule
+    DigitOnlyModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig, 'club-members-firebase')
   ],
   exports: [
     PhonePipe,

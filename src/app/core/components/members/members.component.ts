@@ -5,6 +5,7 @@ import { ColumnMode } from '@swimlane/ngx-datatable';
 import { Subscription, BehaviorSubject } from 'rxjs';
 import { DialogService } from '../../services/dialog.service'
 import { ReactiveFormsModule } from '@angular/forms';
+import { MemberNumberService } from '../../services/member-number.service';
 
 @Component({
   selector: 'app-members',
@@ -25,36 +26,53 @@ export class MembersComponent implements OnInit, OnDestroy {
   address_tooltip = 'Toggle address details';
   edit_tooltip = "Edit this record";
   delete_tooltip = "Delete this record";
+  isEditMode: boolean;
 
   ColumnMode = ColumnMode;
 
   constructor(
     public httpService: HttpService,
-    public dialogService: DialogService
+    public dialogService: DialogService,
+    private memberNumberService: MemberNumberService
   ) { }
 
   ngOnInit() {
     this.subscriptions.push(
       this.httpService.getMembers().subscribe(members => {
+        console.log('subscribe onInit', members);
         this.rows = members;
+        console.log('rows from members',this.rows);
+
+        this.memberNumberService.idArray = [...members];
+        // console.log('idArray in memberNumberService', this.memberNumberService.idArray);
+        //good to here
+        this.memberNumberService.findNextAvailableId();
       }));
+
+    this.httpService.editMode.subscribe(mode => {
+      this.isEditMode = mode;
+    });
+
     this.httpService.newRows$.subscribe(value => {
       this.rows = [...value];
-    })
+    });
   }
 
   editMemberClick(rowId: any) {
+    this.httpService.editMode.next(true);
+    console.log('delete row', rowId);
     this.subscriptions.push(
       this.httpService.getMember(rowId).subscribe(info => {
         this.dialogService.memberInfo = info;
-        this.dialogService.isEditMode = true;
+        this.httpService.editMode.next(true);
         this.dialogService.openMemberDetailDialog(this.dialogService.memberInfo);
       })
     );
   }
 
   addMemberClick() {
-    this.dialogService.isEditMode = false;
+    this.httpService.editMode.next(false);
+    console.log('add member', this.isEditMode);
     this.dialogService.openMemberDetailDialog();
   }
 

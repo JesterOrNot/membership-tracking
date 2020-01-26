@@ -7,8 +7,7 @@ interface IAddress {
 }
 
 export interface IClubMember {
-  id: string;
-  editMode: boolean;
+  memberId: number;
   firstName: string;
   lastName: string;
   address?: IAddress;
