@@ -1,0 +1,54 @@
+::ng-deep .ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: normal !important;
+  /* text-align: center !important; */
+  vertical-align: middle !important;
+}
+
+::ng-deep .ngx-datatable.material .datatable-body .datatable-row-detail {
+  padding: 0;
+}
+
+::ng-deep .datatable-row-detail .address-move-left .addr-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+::ng-deep .datatable-header-cell-label {
+  font-weight: 600;
+  font-size: 13px
+}
+
+.container-fluid {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-top: 35px;
+}
+
+.add-button-container {
+  padding-left: 220px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.address {
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 100;
+}
+
+.address-pad {
+  padding-bottom: 50px;
+}
+
+.address-move-left {
+  padding-left: 75px;
+}
+
+.clickable {
+  cursor: pointer;
+}

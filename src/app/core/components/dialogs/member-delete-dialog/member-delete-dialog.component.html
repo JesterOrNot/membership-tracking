@@ -1,0 +1,14 @@
+
+<h1 mat-dialog-title
+    class="delete-title">Delete Record</h1>
+<mat-dialog-content>
+  Are you sure you want to delete the record for {{firstName}} {{lastName}}?
+</mat-dialog-content>
+<mat-dialog-actions align="end"
+                    class="delete-actions">
+  <button mat-raised-button
+          class="btn btn-primary"
+          (click)="deleteConfirmedClick()">Delete</button>
+  <button mat-raised-button
+          (click)="close()">Cancel</button>
+</mat-dialog-actions>

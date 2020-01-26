@@ -1,0 +1,156 @@
+<mat-card>
+  <mat-card-header class="header"
+                   fxLayoutAlign="center center">
+    {{actionType}} Member Information
+  </mat-card-header>
+  <form [formGroup]="memberForm"
+        (ngSubmit)="onSubmit()">
+    <div class="row form-subtitle"
+         fxLayoutGap="70px"
+         fxLayoutAlign="start center">
+      <div fxFlexOffset="80px">Member ID: {{memberNumber}}</div>
+      <div fxFlexOffset="90px"> Member Since: {{memberSince | dateFormat}}</div>
+    </div>
+
+
+    <div>
+      <div class="row"
+           fxLayoutGap="70px"
+           fxLayoutAlign="start center">
+
+        <div fxFlexOffset="110px">
+          <mat-form-field>
+            <input matInput
+                   name="firstName"
+                   formControlName="firstName"
+                   placeholder="First Name" />
+            <mat-error *ngIf="hasError('firstName', 'required')">First name is required</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field>
+            <input matInput
+                   name="lastName"
+                   formControlName="lastName"
+                   placeholder="Last Name" />
+            <mat-error *ngIf="hasError('lastName', 'required')">Last name is required</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div formGroupName="address">
+      <div class="row"
+           fxLayoutAlign="start center">
+        <div fxFlexOffset="110px">
+          <mat-form-field fxFlex="300px">
+            <input matInput
+                   name="street"
+                   formControlName="street"
+                   placeholder="Street Address" />
+            <mat-error *ngIf="hasError('address.street', 'required')">A street address is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row"
+           fxLayoutAlign="start center">
+        <div fxFlexOffset="110px">
+          <mat-form-field>
+            <input matInput
+                   name="city"
+                   formControlName="city"
+                   placeholder="City" />
+            <mat-error *ngIf="hasError('address.city', 'required')">A city name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field fxFlex="75px"
+                          fxFlexOffset="70px">
+            <input matInput
+                   name="state"
+                   formControlName="state"
+                   placeholder="State">
+            <mat-error fxFlex="250px"
+                       *ngIf="hasError('address.state', 'required')">Required</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row"
+           fxLayoutAlign="start center">
+        <div>
+          <mat-form-field fxFlex="130px"
+                          fxFlexOffset="110px">
+            <input matInput
+                   digitOnly
+                   maxLength="5"
+                   autocomplete="off"
+                   name="zipcode"
+                   formControlName="zipcode"
+                   placeholder="ZipCode" />
+            <mat-error *ngIf="hasError('address.zipcode', 'required')">Zipcode is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="row"
+             fxLayoutAlign="start center"
+             fxFlexOffset="120px">
+          <mat-form-field fxFlex="140px">
+            <input matInput
+                   appPhoneMask
+                   #phoneNumber
+                   type="tel"
+                   id="phoneNumber"
+                   name="phoneNumber"
+                   formControlName="phoneNumber"
+                   placeholder="Phone Number" />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div class="row"
+         fxLayoutAlign="start center">
+      <div>
+        <mat-form-field fxFlexOffset="110px"
+                        fxFlex="200px">
+          <mat-select [(value)]="selected"
+                      placeholder="Favorite Activity"
+                      formControlName="favoriteActivity"
+                      name="favoriteActivity">
+            <mat-option>Choose an Activity</mat-option>
+            <mat-option *ngFor="let activity of activities"
+                        [value]="activity.value">
+              {{activity.desc}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxLayout="row"
+         fxLayoutGap="70px"
+         fxLayoutAlign="end center">
+      <div fxFlexOffset="200px">
+        <button mat-raised-button
+                [disabled]="!memberForm.valid"
+                type="submit"
+                class="btn btn-primary">
+          Save Member
+        </button>
+
+        <button mat-raised-button
+                class="btn btn-secondary "
+                style="margin-left: 20px;"
+                type="button"
+                (click)="close()">Cancel</button>
+      </div>
+    </div>
+  </form>
+</mat-card>

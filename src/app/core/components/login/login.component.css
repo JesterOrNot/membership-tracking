@@ -1,0 +1,17 @@
+.login-form {
+  padding-top: 10%;
+  padding-bottom: 1.5rem;
+}
+
+.login-form .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.card {
+box-shadow: 0 10px 20px rgba(0,0,0,0.2), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.login-btn {
+width: 125px;
+}

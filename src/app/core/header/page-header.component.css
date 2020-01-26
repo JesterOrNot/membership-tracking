@@ -1,0 +1,25 @@
+.container-fluid.header {
+  height: 70px;
+  background-color: rgb(1, 122, 255) !important;
+  color: white;
+}
+
+.logo {
+  padding-top: 5px;
+}
+
+.header-title {
+  color: white;
+  /* width: 600px; */
+  font-size: 35px;
+  vertical-align: middle;
+  text-align: center;
+  line-height: 60px;
+}
+
+.header-menu {
+  /* color: white; */
+  width: 50px;
+  vertical-align: middle;
+  line-height: 60px;
+}

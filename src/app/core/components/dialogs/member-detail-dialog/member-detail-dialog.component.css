@@ -1,0 +1,24 @@
+.member-detail-form {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.member-detail-form .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+::ng-deep .mat-dialog-container {
+  overflow-y: hidden !important;
+}
+
+.mat-card-header.header {
+  background-color: rgb(1, 122, 255);
+  color: white;
+  border-radius: 4px;
+}
+
+.form-subtitle {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}

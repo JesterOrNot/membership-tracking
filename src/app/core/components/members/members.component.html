@@ -1,0 +1,124 @@
+<div>
+  <div class="add-button-container">
+    <button mat-raised-button
+            id="addMemberButton"
+            class="btn btn-primary pull-left"
+            (click)="addMemberClick()">Add Member</button>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <ngx-datatable #memberTable
+                 class="bootstrap expandable"
+                 [rowHeight]="50"
+                 [columnMode]="ColumnMode.force"
+                 [headerHeight]="50"
+                 [footerHeight]="55"
+                 [limit]="5"
+                 [rows]="rows"
+                 (page)="onPage($event)">
+
+    <!-- Row detail template -->
+    <ngx-datatable-row-detail rowHeight="100"
+                              #memberDetailRow
+                              (toggle)="onDetailToggle($event)">
+      <ng-template let-row="row"
+                   let-expanded="expanded"
+                   ngx-datatable-row-detail-template>
+        <div class="address-move-left">
+          <div class="addr-title">Address</div>
+          <div class="address">{{ row.address.street }}</div>
+          <div class="address">{{ row.address.city }}, {{ row.address.state }}
+            {{ row.address.zipcode}}</div>
+          <div class="address address-pad">Phone: {{ row.address.phoneNumber | phone }}</div>
+        </div>
+      </ng-template>
+    </ngx-datatable-row-detail>
+
+    <!-- Column templates -->
+
+    <ngx-datatable-column name="Address"
+                          prop="id"
+                          [draggable]="false"
+                          [minWidth]="50"
+                          [maxWidth]="70"
+                          [sortable]="false"
+                          [resizeable]="false">
+      <ng-template let-row="row"
+                   let-expanded="expanded"
+                   ngx-datatable-cell-template>
+        <a href="javascript:void(0)"
+           [class.datatable-icon-right]="!expanded"
+           matTooltip="{{address_tooltip}}"
+           [class.datatable-icon-down]="expanded"
+           title="Expand-Collapse Row"
+           (click)="toggleExpandRow(row)"></a>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Member ID#"
+                          [minWidth]="90"
+                          prop="id">
+      <ng-template let-row="row"
+                   ngx-datatable-cell-template>
+        {{row.id}}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="First Name"
+                          [minWidth]="150"
+                          prop="firstName">
+      <ng-template let-row="row"
+                   ngx-datatable-cell-template>
+        {{row.firstName}}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Last Name"
+                          [minWidth]="150"
+                          prop="lastName">
+      <ng-template let-row="row"
+                   ngx-datatable-cell-template>
+        {{row.lastName}}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Member Since"
+                          [minWidth]="50"
+                          prop="memberSince">
+      <ng-template let-row="row"
+                   ngx-datatable-cell-template>
+        {{row.memberSince}}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Favorite Activity"
+                          [minWidth]=200
+                          prop="favoriteActivity">
+      <ng-template let-row="row"
+                   ngx-datatable-cell-template>
+        {{row.favoriteActivity}}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column [minWidth]=30
+                          [maxWidth]=50>
+      <ng-template let-row="row"
+                   ngx-datatable-cell-template>
+        <i class="fas fa-edit clickable"
+           matTooltip="{{edit_tooltip}}"
+           (click)="editMemberClick(row.id)"></i>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column [minWidth]=30
+                          [maxWidth]=50>
+      <ng-template let-row="row"
+                   ngx-datatable-cell-template>
+        <i class="fas fa-trash-alt clickable"
+           matTooltip="{{delete_tooltip}}"
+           (click)="deleteMemberClick(row)"></i>
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+</div>
