@@ -4,7 +4,8 @@ import { catchError, tap } from "rxjs/operators";
 import { HttpErrorResponse, HttpClient, HttpHeaders } from "@angular/common/http";
 import { IClubMember } from "../../shared/models/club-member.model";
 import { BehaviorSubject, Observable, Subscription, Subject } from 'rxjs';
-import { AngularFireList, AngularFireObject , AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireList, AngularFireObject, AngularFireDatabase } from '@angular/fire/database';
+import { map } from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -38,19 +39,29 @@ export class HttpService {
     private http: HttpClient,
     private router: Router,
     // public db: AngularFireDatabase
-  ) {   }
+  ) { }
 
   ngOnInit() {
-
+    // this.editMode.subscribe(mode => {
+    //   this.isEditMode = mode;
+    // });
   }
 
   // fetch all members
-  getMembers(): Observable<IClubMember[]> {
+  getMembers() {
     return this.http
-      .get<{[key: string]: IClubMember[]}>(`${this.restApi}`)
+      .get<{[key: string]: IClubMember[] }>(`${this.restApi}`)
       .pipe(
-        tap(data => console.log('running getMembers', data)),
-        catchError(this.handleError)
+        map((responseData) => {
+          const membersArray: any[] = [];
+          for (const key in responseData) {
+            if (responseData.hasOwnProperty(key)) {
+              membersArray.push({ ...responseData[key], id: key })
+            }
+          }
+          console.log('members array from get', membersArray);
+          return membersArray;
+        })
       );
   }
 
@@ -100,7 +111,7 @@ export class HttpService {
   }
 
   // call this to update the table after adding, editing or deleting
-  // as change detection doesn't fire when the db.json is changed
+  // as change detection doesn't fire when the database is changed
   refreshTable() {
     setTimeout(() => {
       this.subscriptions.push(
@@ -116,7 +127,7 @@ export class HttpService {
       console.error("Error occurred: ", error.error.message);
     } else {
       console.error(
-        `Server error ${error.status} ` + `body was:`+ `${error.error}`
+        `Server error ${error.status} ` + `body was:` + `${error.error}`
       );
       console.log('Error object', error);
     }

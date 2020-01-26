@@ -57,12 +57,12 @@ export class DialogService implements OnInit {
     });
     console.log('edit in openMember', this.isEditMode);
     let dialogConfig = new MatDialogConfig();
-    if (!this.isEditMode) {
+    // if (!this.isEditMode) {
       dialogConfig.width = '690px';
       dialogConfig.height = '530px';
       dialogConfig.disableClose = false;
       dialogConfig.autoFocus = true;
-    }
+    // }
     if (this.isEditMode) {
       dialogConfig.data = memberData;
       dialogConfig.autoFocus = false;

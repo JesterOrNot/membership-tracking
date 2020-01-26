@@ -39,8 +39,8 @@ export class MemberDetailDialogComponent implements OnInit, OnDestroy {
     private httpService: HttpService,
     public zipcodeService: ZipcodeService,
     private phoneFormatPipe: PhonePipe,
-    public memberNumberService: MemberNumberService
-    // private activityListService: ActivityListService
+    public memberNumberService: MemberNumberService,
+    private activityListService: ActivityListService
   ) { }
 
   ngOnInit() {
@@ -49,14 +49,13 @@ export class MemberDetailDialogComponent implements OnInit, OnDestroy {
       .subscribe(number => {
         this.nextAvailableMemberNumber = number;
     });
-
+    console.log('oninit member detail, next number', this.nextAvailableMemberNumber);
     this.httpService.editMode.subscribe(mode => {
       this.isEditMode = mode;
     })
 
     if (this.data != null) {
-      if (this.data.editMode) {
-        this.isEditMode = true;
+      if (this.isEditMode) {
         this.memberNumber = this.data.memberId;
         this.memberSince = this.data.memberSince;
         this.actionType = "Edit";
@@ -64,11 +63,12 @@ export class MemberDetailDialogComponent implements OnInit, OnDestroy {
       }
     }
     else { // adding a new record
-      this.isEditMode = false;
+      this.httpService.editMode.next(false);
       this.memberNumber = this.nextAvailableMemberNumber;
       this.actionType = "Add New"
       this.memberSince = new Date().toLocaleDateString();
     }
+    this.activities = this.activityListService.getActivities();
   }
 
   initForm() {
@@ -122,6 +122,7 @@ export class MemberDetailDialogComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    console.log('oninit member detail submit, next number', this.nextAvailableMemberNumber);
     if (this.isEditMode) {
       this.httpService.updateMember(this.memberForm.value, this.memberForm.value.id);
     }

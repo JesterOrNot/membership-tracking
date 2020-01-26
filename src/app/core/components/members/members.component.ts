@@ -39,15 +39,17 @@ export class MembersComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.push(
       this.httpService.getMembers().subscribe(members => {
+        if (members != null) {
         console.log('subscribe onInit', members);
         this.rows = members;
         console.log('rows from members',this.rows);
 
         this.memberNumberService.idArray = [...members];
-        // console.log('idArray in memberNumberService', this.memberNumberService.idArray);
+        console.log('idArray in memberNumberService', this.memberNumberService.idArray[0]);
         //good to here
         this.memberNumberService.findNextAvailableId();
-      }));
+      }}));
+
 
     this.httpService.editMode.subscribe(mode => {
       this.isEditMode = mode;
