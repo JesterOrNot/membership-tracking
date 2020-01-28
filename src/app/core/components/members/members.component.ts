@@ -15,15 +15,15 @@ export class MembersComponent implements OnInit {
 
   @ViewChild('memberTable', { static: false }) table: any;
 
-  newId: number;
-  member: IClubMember;
-  rows: Array<IClubMember> = [];
-  expanded: any = {};
-  timeout: any;
-  address_tooltip = 'Toggle address details';
-  edit_tooltip = "Edit this record";
-  delete_tooltip = "Delete this record";
-  isEditMode: boolean;
+  private newId: number;
+  private member: IClubMember;
+  private rows: Array<IClubMember> = [];
+  private expanded: any = {};
+  private timeout: any;
+  private address_tooltip = 'Toggle address details';
+  private edit_tooltip = "Edit this record";
+  private delete_tooltip = "Delete this record";
+  private isEditMode: boolean;
 
   ColumnMode = ColumnMode;
 
@@ -38,11 +38,10 @@ export class MembersComponent implements OnInit {
     this.httpService.getMembers().subscribe(members => {
       if (members != null) {
         this.rows = members;
-        console.log('this rows', this.rows);
       }
     });
 
-    //get the next available member ID number for new members
+    // calculate the next available member ID number for new members
     this.memberNumberService.findNextAvailableId();
 
     // edit mode will toggle based on clicking New or Edit
@@ -52,37 +51,30 @@ export class MembersComponent implements OnInit {
 
 
     this.httpService.newRows$.subscribe(value => {
-      console.log('value from members subscription', value);
       this.rows = [...value];
     });
 
+    // get the next available member number from the Subject in the service
     this.memberNumberService.nextAvailableMemberNumber$.subscribe(number => {
       this.newId = number;
-      console.log('next id is', this.newId);
     });
   }
 
   editMemberClick(rowId: any) {
     this.httpService.editMode.next(true);
-    console.log('edit row', rowId);
-
     this.httpService.getMember(rowId).subscribe(info => {
       this.dialogService.memberInfo = info;
       this.httpService.editMode.next(true);
-      console.log('editing member data', info);
       this.dialogService.openMemberDetailDialog(this.dialogService.memberInfo, rowId);
-    })
-
+    });
   }
 
   addMemberClick() {
     this.httpService.editMode.next(false);
-    console.log('add member', this.isEditMode);
     this.dialogService.openMemberDetailDialog();
   }
 
   deleteMemberClick(row: any) {
-    console.log('deleting', row);
     this.dialogService.openDeleteDialog({
       id: row.id,
       firstName: row.firstName,
@@ -100,8 +92,7 @@ export class MembersComponent implements OnInit {
   }
 
   onDetailToggle(event) {
-    // future use, trigger when the address row is exposed
+    // future use, triggered when the address row is exposed
   }
-
 }
 

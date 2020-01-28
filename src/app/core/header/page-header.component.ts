@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class PageHeaderComponent {
 
-  clubName = 'Hill Valley Athletic Club';
+  clubName = 'Club Member Tracking System';
 
   constructor() { }
 

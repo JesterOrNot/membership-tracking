@@ -50,7 +50,7 @@ export class MemberDetailDialogComponent implements OnInit, OnDestroy {
     this.memberNumberService.nextAvailableMemberNumber$
       .subscribe(number => {
         this.nextAvailableMemberNumber = number;
-    });
+      });
     console.log('oninit member detail, next number', this.nextAvailableMemberNumber);
     this.httpService.editMode.subscribe(mode => {
       this.isEditMode = mode;
@@ -105,13 +105,15 @@ export class MemberDetailDialogComponent implements OnInit, OnDestroy {
       firstName: record.data.firstName,
       lastName: record.data.lastName,
       memberSince: record.data.memberSince,
-      favoriteActivity: record.data.favoriteActivity,
+      favoriteActivity: record.data.favoriteActivity != null ? record.data.favoriteActivity : '',
       address: {
         street: record.data.address.street,
         city: record.data.address.city,
         state: record.data.address.state,
         zipcode: record.data.address.zipcode,
-        phoneNumber: this.phoneFormatPipe.transform(record.data.address.phoneNumber)
+        phoneNumber: record.data.address.phoneNumber != null
+          ? this.phoneFormatPipe.transform(record.data.address.phoneNumber)
+          : ''
       }
     }
     this.memberForm.setValue(newValues);
@@ -139,7 +141,7 @@ export class MemberDetailDialogComponent implements OnInit, OnDestroy {
       console.log('formatted phone', formattedPhone);
       this.memberForm.patchValue({ memberSince: new Date().toLocaleDateString() });
       this.memberForm.patchValue({ memberId: this.nextAvailableMemberNumber });
-      this.memberForm.patchValue({ address: {phoneNumber: formattedPhone}});
+      this.memberForm.patchValue({ address: { phoneNumber: formattedPhone } });
       console.log('patched form', this.memberForm.value);
       this.httpService.addMember(this.memberForm.value);
       this.memberNumberService.findNextAvailableId();

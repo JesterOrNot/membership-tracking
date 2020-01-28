@@ -11,7 +11,8 @@ import {
   MatCheckboxModule,
   MatButtonModule,
   MatTooltipModule,
-  MatSidenavModule
+  MatSidenavModule,
+  MatToolbarModule
 } from "@angular/material";
 
 // import { DialogService } from './core/services/dialog.service';
@@ -28,7 +29,8 @@ import {
     MatCheckboxModule,
     MatButtonModule,
     MatTooltipModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatToolbarModule
   ],
   exports: [
     CommonModule,
@@ -40,7 +42,8 @@ import {
     MatCheckboxModule,
     MatButtonModule,
     MatTooltipModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatToolbarModule
   ],
   providers: [
     MatDialog,

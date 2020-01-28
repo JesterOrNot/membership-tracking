@@ -1,9 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
-/* @import "~@angular/material/prebuilt-themes/deeppurple-amber.css"; */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+/* @import "~@angular/material/prebuilt-themes/indigo-pink.css"; */
 /* @import "~@angular/material/prebuilt-themes/pink-bluegrey.css"; */
 /* @import "~@angular/material/prebuilt-themes/purple-green.css"; */
-
 
 .close.mat-button {
   position: absolute;
@@ -13,4 +12,10 @@
   line-height: 14px;
   min-width: auto;
 }
+
+/* body {
+  background-image: url('/blue-water.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+} */
 

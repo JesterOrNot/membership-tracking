@@ -1,5 +1,6 @@
 {
   "workbench.colorTheme": "Tomorrow Night Blue",
   "editor.parameterHints.enabled": false,
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "workbench.iconTheme": "material-icon-theme"
 }

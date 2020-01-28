@@ -11,8 +11,8 @@ export interface IClubMember {
   firstName: string;
   lastName: string;
   address?: IAddress;
-  memberSince?: string;
+  memberSince: string;
   favoriteActivity?: string;
-  id?: string
+  // id?: string
 }
 

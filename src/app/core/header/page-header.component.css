@@ -1,19 +1,20 @@
-.container-fluid.header {
+.mat-toolbar {
   height: 70px;
-  background-color: rgb(1, 122, 255) !important;
+  display: flex;
   color: white;
+  /* justify-content: center; */
 }
 
-.logo {
-  padding-top: 5px;
+.menu-spacer {
+  width: 40px;
 }
 
 .header-title {
   color: white;
   /* width: 600px; */
-  font-size: 35px;
+  font-size: 25px;
   vertical-align: middle;
-  text-align: center;
+  /* display: inline-block; */
   line-height: 60px;
 }
 
@@ -23,3 +24,10 @@
   vertical-align: middle;
   line-height: 60px;
 }
+
+::ng-deep .mat-button.mat-button-base:hover {
+  background-color:silver;
+  color: black;
+  text-decoration: none;
+}
+
