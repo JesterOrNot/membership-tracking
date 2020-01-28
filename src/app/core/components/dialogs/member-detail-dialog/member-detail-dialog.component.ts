@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input, ViewChild, ElementRef, AfterViewInit, HostListener, OnDestroy } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { IClubMember } from '../../../../shared/models/club-member.model'
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -32,6 +32,7 @@ export class MemberDetailDialogComponent implements OnInit, OnDestroy {
   actionType: string; //remove this
   selected = 'None';
   nextAvailableMemberNumber: number;
+  private key: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -44,6 +45,7 @@ export class MemberDetailDialogComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    let record = this.data;
     this.initForm();
     this.memberNumberService.nextAvailableMemberNumber$
       .subscribe(number => {
@@ -54,12 +56,16 @@ export class MemberDetailDialogComponent implements OnInit, OnDestroy {
       this.isEditMode = mode;
     })
 
-    if (this.data != null) {
+    if (record != null) {
+      console.log('dialog data', record);
+      console.log('street is', record.data.address.street);
+      console.log('key is', record.key);
+      this.key = record.key;
       if (this.isEditMode) {
-        this.memberNumber = this.data.memberId;
-        this.memberSince = this.data.memberSince;
+        this.memberNumber = record.memberId;
+        this.memberSince = record.memberSince;
         this.actionType = "Edit";
-        this.loadEditValues(this.data);
+        this.loadEditValues(record);
       }
     }
     else { // adding a new record
@@ -92,19 +98,20 @@ export class MemberDetailDialogComponent implements OnInit, OnDestroy {
     return this.memberForm.get(controlName).hasError(errorName);
   }
 
-  loadEditValues(data) {
+  loadEditValues(record) {
+    console.log('load values', record.data.address);
     let newValues = {
-      memberId: data.memberId,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      memberSince: data.memberSince,
-      favoriteActivity: data.favoriteActivity,
+      memberId: record.data.memberId,
+      firstName: record.data.firstName,
+      lastName: record.data.lastName,
+      memberSince: record.data.memberSince,
+      favoriteActivity: record.data.favoriteActivity,
       address: {
-        street: data.address.street,
-        city: data.address.city,
-        state: data.address.state,
-        zipcode: data.address.zipcode,
-        phoneNumber: this.phoneFormatPipe.transform(data.address.phoneNumber)
+        street: record.data.address.street,
+        city: record.data.address.city,
+        state: record.data.address.state,
+        zipcode: record.data.address.zipcode,
+        phoneNumber: this.phoneFormatPipe.transform(record.data.address.phoneNumber)
       }
     }
     this.memberForm.setValue(newValues);
@@ -122,16 +129,23 @@ export class MemberDetailDialogComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log('oninit member detail submit, next number', this.nextAvailableMemberNumber);
     if (this.isEditMode) {
-      this.httpService.updateMember(this.memberForm.value, this.memberForm.value.id);
+      this.httpService.updateMember(this.memberForm.value, this.key);
+      console.log('update form values', this.memberForm.value);
     }
     else { //adding a new record
+      console.log('new form values', this.memberForm.value);
+      let formattedPhone = this.phoneFormatPipe.transform(this.memberForm.value.address.phoneNumber);
+      console.log('formatted phone', formattedPhone);
       this.memberForm.patchValue({ memberSince: new Date().toLocaleDateString() });
       this.memberForm.patchValue({ memberId: this.nextAvailableMemberNumber });
+      this.memberForm.patchValue({ address: {phoneNumber: formattedPhone}});
+      console.log('patched form', this.memberForm.value);
       this.httpService.addMember(this.memberForm.value);
+      this.memberNumberService.findNextAvailableId();
     }
     this.httpService.refreshTable();
+    console.log('after submit, next number', this.nextAvailableMemberNumber);
     this.close();
   }
 

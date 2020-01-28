@@ -1,8 +1,7 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { IClubMember } from '../../../shared/models/club-member.model';
 import { ColumnMode } from '@swimlane/ngx-datatable';
-import { Subscription, BehaviorSubject } from 'rxjs';
 import { DialogService } from '../../services/dialog.service'
 import { ReactiveFormsModule } from '@angular/forms';
 import { MemberNumberService } from '../../services/member-number.service';
@@ -11,11 +10,9 @@ import { MemberNumberService } from '../../services/member-number.service';
   selector: 'app-members',
   templateUrl: './members.component.html',
   styleUrls: ['./members.component.css']
-  // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MembersComponent implements OnInit, OnDestroy {
+export class MembersComponent implements OnInit {
 
-  private subscriptions: Subscription[] = [];
   @ViewChild('memberTable', { static: false }) table: any;
 
   newId: number;
@@ -37,39 +34,45 @@ export class MembersComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.subscriptions.push(
-      this.httpService.getMembers().subscribe(members => {
-        if (members != null) {
-        console.log('subscribe onInit', members);
+    // get all records to populate the table
+    this.httpService.getMembers().subscribe(members => {
+      if (members != null) {
         this.rows = members;
-        console.log('rows from members',this.rows);
+        console.log('this rows', this.rows);
+      }
+    });
 
-        this.memberNumberService.idArray = [...members];
-        console.log('idArray in memberNumberService', this.memberNumberService.idArray[0]);
-        //good to here
-        this.memberNumberService.findNextAvailableId();
-      }}));
+    //get the next available member ID number for new members
+    this.memberNumberService.findNextAvailableId();
 
-
+    // edit mode will toggle based on clicking New or Edit
     this.httpService.editMode.subscribe(mode => {
       this.isEditMode = mode;
     });
 
+
     this.httpService.newRows$.subscribe(value => {
+      console.log('value from members subscription', value);
       this.rows = [...value];
+    });
+
+    this.memberNumberService.nextAvailableMemberNumber$.subscribe(number => {
+      this.newId = number;
+      console.log('next id is', this.newId);
     });
   }
 
   editMemberClick(rowId: any) {
     this.httpService.editMode.next(true);
-    console.log('delete row', rowId);
-    this.subscriptions.push(
-      this.httpService.getMember(rowId).subscribe(info => {
-        this.dialogService.memberInfo = info;
-        this.httpService.editMode.next(true);
-        this.dialogService.openMemberDetailDialog(this.dialogService.memberInfo);
-      })
-    );
+    console.log('edit row', rowId);
+
+    this.httpService.getMember(rowId).subscribe(info => {
+      this.dialogService.memberInfo = info;
+      this.httpService.editMode.next(true);
+      console.log('editing member data', info);
+      this.dialogService.openMemberDetailDialog(this.dialogService.memberInfo, rowId);
+    })
+
   }
 
   addMemberClick() {
@@ -79,7 +82,11 @@ export class MembersComponent implements OnInit, OnDestroy {
   }
 
   deleteMemberClick(row: any) {
-    this.dialogService.openDeleteDialog({ id: row.id, firstName: row.firstName, lastName: row.lastName });
+    console.log('deleting', row);
+    this.dialogService.openDeleteDialog({
+      id: row.id,
+      firstName: row.firstName,
+      lastName: row.lastName });
   }
 
   onPage(event) {
@@ -93,11 +100,8 @@ export class MembersComponent implements OnInit, OnDestroy {
   }
 
   onDetailToggle(event) {
-    // future use
+    // future use, trigger when the address row is exposed
   }
 
-  ngOnDestroy() {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
-  }
 }
 

@@ -35,42 +35,38 @@ export class DialogService implements OnInit {
     public httpService: HttpService,
     private dateFormatPipe: DateFormatPipe,
     private applicationRef: ApplicationRef
-  ) { console.log('onInit in dialog'); }
+  ) {  }
 
   ngOnInit() {
     this.subscriptions.push(
       this.httpService.getMembers().subscribe(members => {
         this.rows = members;
       }));
-
-
-    console.log('edit mode in dialog is ', this.httpService);
   }
 
   formatMemberSinceDate(value: Date) {
     this.todaysDate = this.dateFormatPipe.transform(value);
   }
 
-  openMemberDetailDialog(memberData?: IClubMember) {
+  openMemberDetailDialog(memberData?: IClubMember, recordId?: string) {
     this.httpService.editMode.subscribe(mode => {
       this.isEditMode = mode;
     });
-    console.log('edit in openMember', this.isEditMode);
     let dialogConfig = new MatDialogConfig();
-    // if (!this.isEditMode) {
-      dialogConfig.width = '690px';
-      dialogConfig.height = '530px';
-      dialogConfig.disableClose = false;
-      dialogConfig.autoFocus = true;
-    // }
+    dialogConfig.width = '690px';
+    dialogConfig.height = '530px';
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+
     if (this.isEditMode) {
-      dialogConfig.data = memberData;
+      dialogConfig.data = {data: memberData, key: recordId};
       dialogConfig.autoFocus = false;
     }
     this.detailDialogRef = this.dialog.open(MemberDetailDialogComponent, dialogConfig);
   }
 
   openDeleteDialog(data: any) {
+    console.log('data to delete dialog', data);
     let dialogConfig = new MatDialogConfig();
     dialogConfig.width = '400px';
     dialogConfig.height = '220px';
@@ -78,12 +74,12 @@ export class DialogService implements OnInit {
     dialogConfig.autoFocus = false;
     dialogConfig.data = data;
     this.deleteDialogRef = this.dialog.open(MemberDeleteDialogComponent, dialogConfig);
-    this.subscriptions.push(
-      this.deleteDialogRef.afterClosed().subscribe(() => {
-        this.httpService
-          .getMembers()
-          .subscribe(members => (this.rows = members));
-      }));
+    // this.subscriptions.push(
+    //   this.deleteDialogRef.afterClosed().subscribe(() => {
+    //     this.httpService
+    //       .getMembers()
+    //       .subscribe(members => (this.rows = members));
+    //   }));
   }
 
   ngOnDestroy() {

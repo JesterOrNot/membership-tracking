@@ -1,37 +1,58 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { IClubMember } from 'src/app/shared/models/club-member.model';
-
+import { HttpService } from './http.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class MemberNumberService implements OnInit {
+// Calculates the next available member ID number by
+// taking the array of all members, extracting the member ID
+// numbers and then getting the maximum number and
+// incrementing it by one
 
-  public nextAvailableMemberNumber$ = new BehaviorSubject<number>(100);
-  public idArray: Array<IClubMember> = [];
-  private idNums: any;
+export class MemberNumberService {
 
-  ngOnInit() { }
+  // hold the next available number for use by the add new member component
+  public nextAvailableMemberNumber$ = new BehaviorSubject<number>(0);
+  //the array of all members passed in my the getMembers http function
+  public memberArray = new BehaviorSubject<any[]>([]);
+
+  //the local array of all member records copied from the memberArray Subject
+  private memberArrayLocal: Array<any> = [];
+  // the member numbers extracted from all member records
+  private idNumbersArray: any[];
+
+  //don't think this is needed, this class doesn't a reference to the next number
+  // private nextMemberNumber: number;
+
+  constructor() {
+    this.memberArray.subscribe(memberList => {
+      this.memberArrayLocal = memberList;
+    });
+  }
 
   // get the next unused id (member ID)
   findNextAvailableId() {
-    console.log('source idArray', this.idArray);
-    let result = 0;
-    this.idNums = [...new Set(this.idArray.map(record => {
-      record.memberId;
-      console.log('record', (record));
-    }))];
-    this.idNums = this.idArray.map(records => {
-      console.log('id array', this.idArray);
-      return records['memberId'];
-    })
+    console.log('array length', this.memberArray.value.length);
+    if (this.memberArray.value.length > 0) {
+      console.log('member array', this.memberArray.value);
+      this.memberArrayLocal = this.memberArray.value;
+      console.log('new memberArrayLocal', this.memberArrayLocal);
 
-    console.log('id number array', this.idNums);
-    result = Math.max.apply(Math, this.idNums)
-    console.log('result from member number service', result);
-    this.nextAvailableMemberNumber$.next(result + 1);
+      this.idNumbersArray = this.memberArrayLocal.map(record => record.memberId);
+      console.log('id numbers', this.idNumbersArray);
+
+      let result = Math.max.apply(Math, this.idNumbersArray)
+      console.log('math result is', result);
+
+      this.nextAvailableMemberNumber$.next(result + 1);
+    }
+    else {
+      console.log('setting next number to 100');
+      this.nextAvailableMemberNumber$.next(100);
+    }
+
   }
-
 }

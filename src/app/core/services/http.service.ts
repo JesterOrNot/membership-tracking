@@ -6,6 +6,7 @@ import { IClubMember } from "../../shared/models/club-member.model";
 import { BehaviorSubject, Observable, Subscription, Subject } from 'rxjs';
 import { AngularFireList, AngularFireObject, AngularFireDatabase } from '@angular/fire/database';
 import { map } from 'rxjs/operators';
+import { MemberNumberService } from './member-number.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,56 +20,50 @@ const httpOptions = {
   providedIn: "root"
 })
 export class HttpService {
-  private subscriptions: Subscription[] = [];
-  // restApi = "http://localhost:27017";
-  // restApi = "http://localhost:3000";
-  restApi = "https://club-members-fbc.firebaseio.com/members.json";
-  // restApi = "https://3000-e415c16d-76d4-4a4c-997c-383f6cf9275b.ws-us02.gitpod.io:3000"
-  // restApi = "https://members-929a.restdb.io/rest/club-members"
-  // restdbKey = "?apikey=5e2508ae4327326cf1c91944"
-  // restApi = "https://my-json-server.typicode.com/robbinsjk/club-members"
+
+  restApi = "https://club-members-fbc.firebaseio.com/members";
   members: IClubMember[] = [];
   member: IClubMember;
-  // private corsApiKey = "5e2508ae4327326cf1c91944";
-
-  newRows$ = new BehaviorSubject<Array<any>>([]);
+  newRows$ = new BehaviorSubject<Array<any>>([]); // are we still using this?
   editMode = new BehaviorSubject<boolean>(null);
   isEditMode: boolean;
 
   constructor(
     private http: HttpClient,
     private router: Router,
-    // public db: AngularFireDatabase
+    private memberNumberService: MemberNumberService
   ) { }
 
-  ngOnInit() {
-    // this.editMode.subscribe(mode => {
-    //   this.isEditMode = mode;
-    // });
-  }
+  ngOnInit() {}
 
   // fetch all members
   getMembers() {
     return this.http
-      .get<{[key: string]: IClubMember[] }>(`${this.restApi}`)
+      .get<{ [key: string]: IClubMember[] }>(`${this.restApi}` + '.json')
       .pipe(
         map((responseData) => {
-          const membersArray: any[] = [];
-          for (const key in responseData) {
-            if (responseData.hasOwnProperty(key)) {
-              membersArray.push({ ...responseData[key], id: key })
+          if (responseData != null) {
+            const membersArray: any[] = [];
+            for (const key in responseData) {
+              if (responseData.hasOwnProperty(key)) {
+                membersArray.push({ ...responseData[key], id: key })
+              }
             }
+            this.newRows$.next([...membersArray]);
+            this.memberNumberService.memberArray.next([...membersArray]);
+
+            this.memberNumberService.findNextAvailableId();
+            return membersArray;
           }
-          console.log('members array from get', membersArray);
-          return membersArray;
         })
       );
   }
 
   // get a specific member
+  // https://club-members-fbc.firebaseio.com/members/-LzZqEHNmazQIGmol9jS.json
   getMember(id: number) {
     return this.http
-      .get<IClubMember>(`${this.restApi}/0`)
+      .get<IClubMember>(`${this.restApi}/` + id + '.json')
       .pipe(
         // tap(data => console.log('from get', data)),
         catchError(this.handleError)
@@ -78,47 +73,47 @@ export class HttpService {
   // add a new member
   addMember(memberForm) {
     console.log('member form', memberForm);
-    this.subscriptions.push(
-      this.http.post(`${this.restApi}`, memberForm).subscribe(
-        memberData => {
-        },
-        error => {
-          console.error("Error on add", error);
-        }
-      ));
+
+    this.http.post(`${this.restApi}` + '.json', memberForm).subscribe(
+      memberData => {
+        this.refreshTable();
+      },
+      error => {
+        console.error("Error on add", error);
+      }
+    );
   }
 
   // delete a specific member
-  deleteMember(row) {
-    this.subscriptions.push(
-      this.http.delete(`${this.restApi}/members/` + row).subscribe(
-        memberData => {
-          // console.log("Delete successful");
-        },
-        error => {
-          console.error("Error on delete", error);
-        }
-      ));
+  deleteMember(recordId) {
+    this.http.delete(`${this.restApi}/` + recordId + '.json').subscribe(
+      memberData => {
+        this.refreshTable();
+      },
+      error => {
+        console.error("Error on delete", error);
+      }
+    );
   }
 
-  updateMember(memberForm, id) {
-    console.log('updating with ', memberForm);
-    this.subscriptions.push(
-      this.http.put(`${this.restApi}/members/` + id, memberForm).subscribe(
-        data => { this.router.navigate(["members"]) },
-        error => { console.log("Error", error) }
-      ))
+  updateMember(memberForm, recordId) {
+    console.log('updating with ', JSON.stringify(memberForm));
+
+    this.http.put(`${this.restApi}/` + recordId + '.json', JSON.stringify(memberForm)).subscribe(
+      data => { this.router.navigate(["members"]) },
+      error => { console.log("Error", error) }
+    )
   }
 
   // call this to update the table after adding, editing or deleting
   // as change detection doesn't fire when the database is changed
   refreshTable() {
     setTimeout(() => {
-      this.subscriptions.push(
         this.getMembers()
           .subscribe(members => {
+            console.log('value of members from refresh', members);
             this.newRows$.next(members);
-          }))
+          });
     }, 800);
   }
 
@@ -132,9 +127,5 @@ export class HttpService {
       console.log('Error object', error);
     }
     return [];
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }

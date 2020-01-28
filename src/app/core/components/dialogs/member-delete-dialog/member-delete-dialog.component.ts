@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
 import { HttpService } from '../../../services/http.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material';
+import { MemberNumberService } from 'src/app/core/services/member-number.service';
 
 @Component({
   selector: 'app-member-delete-dialog',
@@ -10,23 +11,26 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/materia
 export class MemberDeleteDialogComponent {
 
   dialogConfig: MatDialogConfig;
-  rowId: string;
+  recordId: string;
   firstName: string;
   lastName: string;
 
   constructor(
     private httpService: HttpService,
+    public memberNumberService: MemberNumberService,
     public dialogRef: MatDialogRef<MemberDeleteDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public row: any) {
-    this.rowId = row.id;
+      console.log('dialog data is', row);
+    this.recordId = row.id;
     this.firstName = row.firstName;
     this.lastName = row.lastName;
   }
 
   deleteConfirmedClick() {
-    this.httpService.deleteMember(this.rowId);
-    console.log('row id is ', this.rowId);
+    this.httpService.deleteMember(this.recordId);
     this.dialogRef.close();
+    // number of records has changed, recalculate the next available member ID
+    this.memberNumberService.findNextAvailableId();
     this.httpService.refreshTable();
   }
 
