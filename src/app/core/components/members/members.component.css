@@ -53,3 +53,14 @@
   cursor: pointer;
 }
 
+a .twistie .datatable-icon-right{
+  text-decoration: none;
+}
+
+datatable-header.datatable-header {
+  background-color: red !important;
+}
+
+.ngx-datatable.material .datatable-header .datatable-header-cell {
+      background-color: red !important;
+}

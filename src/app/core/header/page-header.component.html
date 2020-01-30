@@ -1,10 +1,15 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <div class="header-title">{{clubName}}</div>
-    <span class="menu-spacer"></span>
-    <div>
-      <a mat-button id="add-new-btn">Add New Member</a>
-      <a mat-button id="add-new-btn">Log Off</a>
-    </div>
-  </mat-toolbar-row>
-</mat-toolbar>
+<header class="header">
+  <div class="container-fluid header">
+    <mat-toolbar-row>
+      <div>
+        <div class="header-title">{{clubName}}
+          <span class="menu-spacer"></span>
+
+          <a (click)=addNewClick()
+             class="header-link">Add New Member</a>
+          <a class="header-link">Log Off</a>
+        </div>
+      </div>
+    </mat-toolbar-row>
+  </div>
+</header>

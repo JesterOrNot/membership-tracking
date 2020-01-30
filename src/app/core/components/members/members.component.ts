@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { IClubMember } from '../../../shared/models/club-member.model';
 import { ColumnMode } from '@swimlane/ngx-datatable';
@@ -69,10 +69,10 @@ export class MembersComponent implements OnInit {
     });
   }
 
-  addMemberClick() {
-    this.httpService.editMode.next(false);
-    this.dialogService.openMemberDetailDialog();
-  }
+  // addMemberClick() {
+  //   this.httpService.editMode.next(false);
+  //   this.dialogService.openMemberDetailDialog();
+  // }
 
   deleteMemberClick(row: any) {
     this.dialogService.openDeleteDialog({

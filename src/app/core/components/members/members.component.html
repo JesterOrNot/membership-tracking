@@ -1,4 +1,4 @@
-<div>
+<!-- <div>
   <div class="add-button-container">
     <button mat-raised-button
             id="addMemberButton"
@@ -6,11 +6,11 @@
             class="btn btn-primary pull-left"
             (click)="addMemberClick()">Add Member</button>
   </div>
-</div>
+</div> -->
 
 <div class="container-fluid">
   <ngx-datatable #memberTable
-                 class="bootstrap expandable"
+                 class="material expandable"
                  [rowHeight]="50"
                  [columnMode]="ColumnMode.force"
                  [headerHeight]="50"
@@ -41,14 +41,15 @@
     <ngx-datatable-column name="Address"
                           prop="address"
                           [draggable]="false"
-                          [minWidth]="50"
-                          [maxWidth]="70"
+                          [minWidth]="70"
+                          [maxWidth]="80"
                           [sortable]="false"
                           [resizeable]="false">
       <ng-template let-row="row"
                    let-expanded="expanded"
                    ngx-datatable-cell-template>
         <a href="javascript:void(0)"
+        class="twistie"
            [class.datatable-icon-right]="!expanded"
            matTooltip="{{address_tooltip}}"
            [class.datatable-icon-down]="expanded"
@@ -58,7 +59,8 @@
     </ngx-datatable-column>
 
     <ngx-datatable-column name="Member ID#"
-                          [minWidth]="90"
+                          [minWidth]="120"
+                          [maxWidth]="130"
                           prop="memberId">
       <ng-template let-row="row"
                    ngx-datatable-cell-template>
@@ -67,7 +69,8 @@
     </ngx-datatable-column>
 
     <ngx-datatable-column name="First Name"
-                          [minWidth]="150"
+                          [minWidth]="220"
+                          [maxWidth]="250"
                           prop="firstName">
       <ng-template let-row="row"
                    ngx-datatable-cell-template>
@@ -76,7 +79,8 @@
     </ngx-datatable-column>
 
     <ngx-datatable-column name="Last Name"
-                          [minWidth]="150"
+                          [minWidth]="240"
+                          [maxWidth]="260"
                           prop="lastName">
       <ng-template let-row="row"
                    ngx-datatable-cell-template>
@@ -85,7 +89,8 @@
     </ngx-datatable-column>
 
     <ngx-datatable-column name="Member Since"
-                          [minWidth]="50"
+                          [minWidth]="150"
+                          [maxWidth]="180"
                           prop="memberSince">
       <ng-template let-row="row"
                    ngx-datatable-cell-template>
@@ -95,6 +100,7 @@
 
     <ngx-datatable-column name="Favorite Activity"
                           [minWidth]=200
+                          [maxWidth]="240"
                           prop="favoriteActivity">
       <ng-template let-row="row"
                    ngx-datatable-cell-template>
