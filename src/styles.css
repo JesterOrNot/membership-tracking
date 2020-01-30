@@ -1,7 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 /* @import "~@angular/material/prebuilt-themes/deeppurple-amber.css"; */
-/* @import "~@angular/material/prebuilt-themes/indigo-pink.css"; */
-@import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+/* @import "~@angular/material/prebuilt-themes/pink-bluegrey.css"; */
+/* @import "~@angular/material/prebuilt-themes/club-members.css"; */
 /* @import "~@angular/material/prebuilt-themes/purple-green.css"; */
 
 /* @import '~bootstrap/dist/css/bootstrap.min.css';
@@ -71,4 +72,46 @@ body {
 
 .ngx-datatable.material .datatable-body-row .datatable-row-odd {
   background: rgb(104, 97, 97) !important;
+}
+
+/* override some Material pre-built them values */
+/* .mat-form-field.mat-form-field-invalid .mat-form-field-label{
+  color:#c2185b;
+  font-weight: bold;
+} */
+
+/* .mat-form-field-invalid .mat-input-element,.mat-warn .mat-input-element {
+  color: #c2185b;
+} */
+
+/* .mat-input-element {
+  caret-color: #c2185b;
+} */
+
+/* .mat-error,
+.mat-form-field.mat-form-field-invalid .mat-form-field-ripple,.mat-form-field.mat-form-field-invalid .mat-form-field-ripple.mat-accent,
+.mat-form-field.mat-form-field-invalid .mat-form-field-label,
+.mat-form-field.mat-form-field-invalid .mat-form-field-label .mat-form-field-required-marker,.mat-form-field.mat-form-field-invalid .mat-form-field-label.mat-accent,
+.mat-form-field-type-mat-native-select.mat-focused:not(.mat-form-field-invalid) .mat-form-field-infix::after,
+.mat-input-element,
+.mat-form-field.mat-focused.mat-primary .mat-select-arrow,
+.mat-form-field.mat-focused .mat-form-field-label.mat-warn,
+.mat-form-field.mat-focused .mat-form-field-ripple{
+  color:#c2185b;
+} */
+
+/* .mat-form-field.mat-focused .mat-form-field-ripple.mat-warn {
+  background-color: #c2185b;
+} */
+
+/* .mat-form-field-appearance-outline.mat-focused.mat-warn .mat-form-field-outline-thick,
+.mat-form-field-appearance-outline.mat-focused.mat-accent .mat-form-field-outline-thick,
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick,
+.mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick {
+  color:#c2185b;
+} */
+
+mat-card-title.mat-card-title {
+  color: #424242;
+  font-weight: 600;
 }
