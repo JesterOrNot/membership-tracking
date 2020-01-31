@@ -1,17 +1,21 @@
-<header class="header">
-  <mat-toolbar color="primary">
-  <!-- <div class="container-fluid header"> -->
-    <mat-toolbar-row>
-      <div>
-        <div class="header-title">{{clubName}}
-          <span class="menu-spacer"></span>
-
-          <a (click)=addNewClick()
-             class="header-link">Add New Member</a>
-          <a class="header-link">Log Off</a>
-        </div>
+<mat-toolbar color="primary"
+             class="tool-bar">
+  <mat-toolbar-row class="toolbar-row"
+                   fxLayoutAlign="start"
+                   fxFlex>
+    <div fxLayout="row"
+         fxFlex="100%"
+         fxLayoutAlign="center center">
+      <div class="header-title"
+           fxLayout="row no-wrap"
+           fxFlex>{{clubName}}
+        <span class="menu-spacer"></span>
+        <a (click)=addNewClick()
+           class="header-link">Add New Member</a>
+        <span class="menu-spacer"></span>
+        <a (click)="logoffClick()" class="header-link">Log Off</a>
       </div>
-    </mat-toolbar-row>
-  <!-- </div> -->
+    </div>
+  </mat-toolbar-row>
 </mat-toolbar>
-</header>
+<div class="spacer"></div>

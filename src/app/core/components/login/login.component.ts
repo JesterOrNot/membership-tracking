@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms'
 import { LoginService } from '../../services/login.service';
-import { MAT_LABEL_GLOBAL_OPTIONS} from '@angular/material/core';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   username: string;
   password: string;
@@ -18,9 +17,6 @@ export class LoginComponent implements OnInit {
     private router: Router,
     public loginService: LoginService
   ) { }
-
-  ngOnInit() {
-  }
 
   onSubmit(form: NgForm) {
     this.loginService.loginName.next(form.value.username);

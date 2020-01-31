@@ -13,6 +13,5 @@ export interface IClubMember {
   address?: IAddress;
   memberSince: string;
   favoriteActivity?: string;
-  // id?: string
 }
 

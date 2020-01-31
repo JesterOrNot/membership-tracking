@@ -20,7 +20,6 @@ export class MemberDeleteDialogComponent {
     public memberNumberService: MemberNumberService,
     public dialogRef: MatDialogRef<MemberDeleteDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public row: any) {
-      console.log('dialog data is', row);
     this.recordId = row.id;
     this.firstName = row.firstName;
     this.lastName = row.lastName;

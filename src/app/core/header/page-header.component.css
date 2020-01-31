@@ -1,47 +1,32 @@
-.container-fluid.header {
-  height: 70px;
-  /* background-color: #424242 !important; */
-  color: white;
-  margin-bottom: 50px;
+.container {
+  height: 60px;
+  width: 100%;
 }
 
-/* .mat-toolbar {
-  height: 70px;
-  display: flex;
-  color: white;
-  margin-bottom: 80px;
-  justify-content: center;
-} */
+.toolbar, toolbar-row {
+  width: 100%;
+  z-index:2;
+  box-shadow:0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12);
+}
 
 .menu-spacer {
   width: 60px;
 }
 
 .header-title {
-  color: white;
-  font-size: 35px;
-  vertical-align: middle;
-  line-height: 60px;
-}
-
-.header-menu {
-  /* color: white; */
-  width: 50px;
-  vertical-align: middle;
-  line-height: 60px;
+  font-size: 30px;
+  line-height: 50px;
 }
 
 .header-link {
-  vertical-align: middle;
-  font-size: 14px;
+  font-size: 16px;
   cursor: pointer;
-  margin-right: 30px;
-  margin-left: 30px;
 }
 
 a:hover {
-  vertical-align: middle;
-  font-size: 14px;
-  cursor: pointer;
   color: crimson !important;
+}
+
+.spacer {
+  height: 125px;
 }

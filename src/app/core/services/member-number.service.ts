@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { IClubMember } from 'src/app/shared/models/club-member.model';
-import { HttpService } from './http.service';
 
 // Calculates the next available member ID number by
 // taking the array of all members, extracting the member ID
@@ -21,11 +19,10 @@ export class MemberNumberService {
   // the member numbers extracted from all member records
   private idNumbersArray: any[];
 
-  constructor() {}
+  constructor() { }
 
   // get the next unused id (member ID)
   findNextAvailableId() {
-
     if (this.memberArray.value.length > 0) {
 
       this.idNumbersArray = this.memberArray.value.map(record => record.memberId);

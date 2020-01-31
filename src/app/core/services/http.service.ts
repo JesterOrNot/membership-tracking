@@ -4,7 +4,6 @@ import { catchError, tap } from "rxjs/operators";
 import { HttpErrorResponse, HttpClient, HttpHeaders } from "@angular/common/http";
 import { IClubMember } from "../../shared/models/club-member.model";
 import { BehaviorSubject, Observable, Subscription, Subject } from 'rxjs';
-import { AngularFireList, AngularFireObject, AngularFireDatabase } from '@angular/fire/database';
 import { map } from 'rxjs/operators';
 import { MemberNumberService } from './member-number.service';
 
@@ -34,8 +33,6 @@ export class HttpService {
     private memberNumberService: MemberNumberService
   ) { }
 
-  ngOnInit() {}
-
   // fetch all members
   getMembers() {
     return this.http
@@ -60,7 +57,6 @@ export class HttpService {
   }
 
   // get a specific member
-  // https://club-members-fbc.firebaseio.com/members/-LzZqEHNmazQIGmol9jS.json
   getMember(id: number) {
     return this.http
       .get<IClubMember>(`${this.restApi}/` + id + '.json')
@@ -72,8 +68,6 @@ export class HttpService {
 
   // add a new member
   addMember(memberForm) {
-    console.log('member form', memberForm);
-
     this.http.post(`${this.restApi}` + '.json', memberForm).subscribe(
       memberData => {
         this.refreshTable();
@@ -97,8 +91,6 @@ export class HttpService {
   }
 
   updateMember(memberForm, recordId) {
-    console.log('updating with ', JSON.stringify(memberForm));
-
     this.http.put(`${this.restApi}/` + recordId + '.json', JSON.stringify(memberForm)).subscribe(
       data => { this.router.navigate(["members"]) },
       error => { console.log("Error", error) }
@@ -109,11 +101,10 @@ export class HttpService {
   // as change detection doesn't fire when the database is changed
   refreshTable() {
     setTimeout(() => {
-        this.getMembers()
-          .subscribe(members => {
-            console.log('value of members from refresh', members);
-            this.newRows$.next(members);
-          });
+      this.getMembers()
+        .subscribe(members => {
+          this.newRows$.next(members);
+        });
     }, 800);
   }
 

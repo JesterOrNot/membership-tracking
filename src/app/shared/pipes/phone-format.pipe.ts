@@ -1,6 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { CommonModule } from '@angular/common'
-// import { parsePhoneNumber, CountryCode } from 'libphonenumber-js/min';
 import { parsePhoneNumber } from 'libphonenumber-js/min';
 
 @Pipe({

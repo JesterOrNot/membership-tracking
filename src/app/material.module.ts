@@ -15,8 +15,6 @@ import {
   MatToolbarModule
 } from "@angular/material";
 
-// import { DialogService } from './core/services/dialog.service';
-
 @NgModule({
   declarations: [],
   imports: [

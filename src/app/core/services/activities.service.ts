@@ -1,11 +1,3 @@
-// Using this to populate the
-// activities select box as json-server doesn't
-// easily support multiple databases.
-// It can be setup to run two server instances but
-// that's a lot of work just to provide a static list
-// of select options. Maybe I'll do that later and provide
-// a list maintenance capability
-
 import { Injectable } from '@angular/core'
 
 export interface IActivity {

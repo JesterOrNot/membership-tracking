@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { IClubMember } from '../../../shared/models/club-member.model';
 import { ColumnMode } from '@swimlane/ngx-datatable';
@@ -78,7 +78,8 @@ export class MembersComponent implements OnInit {
     this.dialogService.openDeleteDialog({
       id: row.id,
       firstName: row.firstName,
-      lastName: row.lastName });
+      lastName: row.lastName
+    });
   }
 
   onPage(event) {

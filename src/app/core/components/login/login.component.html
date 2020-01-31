@@ -1,69 +1,58 @@
-<div fxLayout
-     class="login-form gray-theme">
-  <div fxLayout="column"
-       fxFlexFill
-       fxLayoutAlign="center center">
-    <mat-card class="card"
-              fxLayout="column"
-              fxLayoutAlign="center center"
-              fxFlex="40%">
-      <mat-card-title fxLayout="row"
-                      class="card-title"
-                      fxFlexFill
-                      fxFlex="100"
-                      fxLayoutAlign="center">Log In</mat-card-title>
-      <mat-card-content fxLayout="column"
-                        color="primary"
-                        class="card-body">
+<div fxLayout="row"
+     class="login-wrapper"
+     fxLayoutAlign="center center">
+  <mat-card class="box">
+    <mat-card-title>Log In</mat-card-title>
 
-        <form (ngSubmit)="onSubmit(loginForm)"
-              autocomplete="off"
-              #loginForm="ngForm"
-              ngNativeValidate>
-          <div class="form-group row">
-            <div>
-              <mat-form-field [floatLabel]="always">
-                <mat-label>Username</mat-label>
-                <input matInput
-                       name="username"
-                       required
-                       [(ngModel)]="username"
-                       #loginName="ngModel"
-                       placeholder="Enter Your Username">
-                <mat-error>Username is required</mat-error>
-              </mat-form-field>
-            </div>
+    <form (ngSubmit)="onSubmit(loginForm)"
+          autocomplete="off"
+          class="example-form"
+          #loginForm="ngForm"
+          ngNativeValidate>
+      <mat-card-content>
+        <div class="form-group row">
+          <div>
+            <mat-form-field class="example-full-width">
+              <mat-label>Username</mat-label>
+              <input matInput
+                     name="username"
+                     required
+                     [(ngModel)]="username"
+                     #loginName="ngModel"
+                     placeholder="Enter Your Username">
+              <mat-error>Username is required</mat-error>
+            </mat-form-field>
           </div>
+        </div>
 
-          <div class="form-group row">
-            <div>
-              <mat-form-field>
-                <mat-label>Password</mat-label>
-                <input matInput
-                       type="password"
-                       name="password"
-                       required
-                       [(ngModel)]="password"
-                       #pwd="ngModel"
-                       placeholder="Enter Your Password">
-                <mat-error>A password is required</mat-error>
-              </mat-form-field>
-            </div>
-          </div>
+        <div class="form-group row">
+          <div>
+            <mat-form-field class="example-full-width">
+              <mat-label>Password</mat-label>
+              <input matInput
+                     type="password"
+                     name="password"
+                     required
+                     [(ngModel)]="password"
+                     #pwd="ngModel"
+                     placeholder="Enter Your Password">
+              <mat-error>A password is required</mat-error>
+            </mat-form-field>
 
-          <div class="form-group row"
-               fxLayoutAlign="center">
-            <button mat-raised-button
-                    [disabled]="!loginForm.valid"
-                    class="login-btn"
-                    type="submit"
-                    color="primary">
-              Login
-            </button>
           </div>
-        </form>
+        </div>
       </mat-card-content>
-    </mat-card>
-
-  </div>
+      <div class="form-group row"
+           fxLayoutAlign="center">
+        <button mat-raised-button
+                color="accent"
+                [disabled]="!loginForm.valid"
+                class="btn-block"
+                type="submit"
+                color="primary">
+          Login
+        </button>
+      </div>
+    </form>
+  </mat-card>
 </div>
