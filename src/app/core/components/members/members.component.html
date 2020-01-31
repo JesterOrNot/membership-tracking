@@ -5,6 +5,7 @@
                  [columnMode]="ColumnMode.force"
                  [headerHeight]="50"
                  [footerHeight]="55"
+                 [scrollbarH]="40"
                  [limit]="5"
                  [rows]="rows"
                  (page)="onPage($event)">
@@ -34,7 +35,7 @@
                           [minWidth]="70"
                           [maxWidth]="80"
                           [sortable]="false"
-                          [resizeable]="false">
+                          [resizeable]="true">
       <ng-template let-row="row"
                    let-expanded="expanded"
                    ngx-datatable-cell-template>

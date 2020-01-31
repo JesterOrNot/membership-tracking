@@ -1,11 +1,11 @@
-# github:
-#   prebuilds:
-#     master: false
-#     branches: false
-#     pullRequests: false
-#     addCheck: false
-#     addComment: false
-#     addLabel: prebuild-in-gitpod
+github:
+  prebuilds:
+    master: false
+    branches: false
+    pullRequests: false
+    addCheck: false
+    addComment: false
+    addLabel: prebuild-in-gitpod
 
 # NG_CLI_ANALYTICS=ci
 
