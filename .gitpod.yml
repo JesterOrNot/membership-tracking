@@ -10,7 +10,7 @@
 # NG_CLI_ANALYTICS=ci
 
 tasks:
-  - before: export NG_CLI_ANALYTICS=ci
+  - before: export NG_CLI_ANALYTICS=ci &&
             npm i -g @angular/cli &&
             ng analytics off
     init: ng analytics off &&
