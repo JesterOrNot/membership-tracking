@@ -1,6 +1,6 @@
 .container-fluid.header {
   height: 70px;
-  background-color: #424242 !important;
+  /* background-color: #424242 !important; */
   color: white;
   margin-bottom: 50px;
 }

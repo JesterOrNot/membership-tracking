@@ -1,5 +1,5 @@
-<main fxLayout
-      class="login-form">
+<div fxLayout
+     class="login-form gray-theme">
   <div fxLayout="column"
        fxFlexFill
        fxLayoutAlign="center center">
@@ -8,8 +8,12 @@
               fxLayoutAlign="center center"
               fxFlex="40%">
       <mat-card-title fxLayout="row"
+                      class="card-title"
+                      fxFlexFill
+                      fxFlex="100"
                       fxLayoutAlign="center">Log In</mat-card-title>
       <mat-card-content fxLayout="column"
+                        color="primary"
                         class="card-body">
 
         <form (ngSubmit)="onSubmit(loginForm)"
@@ -18,7 +22,7 @@
               ngNativeValidate>
           <div class="form-group row">
             <div>
-              <mat-form-field>
+              <mat-form-field [floatLabel]="always">
                 <mat-label>Username</mat-label>
                 <input matInput
                        name="username"
@@ -60,6 +64,6 @@
         </form>
       </mat-card-content>
     </mat-card>
-  </div>
 
-</main>
+  </div>
+</div>

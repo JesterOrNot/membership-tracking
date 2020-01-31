@@ -23,6 +23,7 @@ import { ActivityListService } from './core/services/activities.service'
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
+import { MAT_LABEL_GLOBAL_OPTIONS } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { environment } from '../environments/environment';
     DialogService,
     DateFormatPipe,
     PhonePipe,
-    ActivityListService
+    ActivityListService,
+    {provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: {float: 'always'}}
   ],
   bootstrap: [AppComponent],
   entryComponents: [
