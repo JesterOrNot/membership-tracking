@@ -10,10 +10,10 @@ import { MemberNumberService } from 'src/app/core/services/member-number.service
 })
 export class MemberDeleteDialogComponent {
 
-  dialogConfig: MatDialogConfig;
-  recordId: string;
-  firstName: string;
-  lastName: string;
+  private dialogConfig: MatDialogConfig;
+  private recordId: string;
+  public firstName: string;
+  public lastName: string;
 
   constructor(
     private httpService: HttpService,

@@ -10,8 +10,8 @@ import { LoginService } from '../../services/login.service';
 })
 export class LoginComponent {
 
-  username: string;
-  password: string;
+  public username: string;
+  public password: string;
 
   constructor(
     private router: Router,

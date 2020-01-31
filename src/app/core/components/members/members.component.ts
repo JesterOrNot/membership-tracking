@@ -17,12 +17,12 @@ export class MembersComponent implements OnInit {
 
   private newId: number;
   private member: IClubMember;
-  private rows: Array<IClubMember> = [];
+  public rows: Array<IClubMember> = [];
   private expanded: any = {};
   private timeout: any;
-  private address_tooltip = 'Toggle address details';
-  private edit_tooltip = "Edit this record";
-  private delete_tooltip = "Delete this record";
+  public address_tooltip = 'Toggle address details';
+  public edit_tooltip = "Edit this record";
+  public delete_tooltip = "Delete this record";
   private isEditMode: boolean;
 
   ColumnMode = ColumnMode;

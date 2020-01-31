@@ -19,18 +19,18 @@ import { MemberNumberService } from 'src/app/core/services/member-number.service
 export class MemberDetailDialogComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
-  memberModel: IClubMember;
-  memberForm: FormGroup;
-  submitted = false;
-  memberSince: string;
-  memberNumber: any;
-  zipcodeResult: string = "";
-  cityName: string = "";
-  stateAbbr: string = "";
-  isEditMode: boolean;
-  activities: any;
-  selected = 'None';
-  nextAvailableMemberNumber: number;
+  private memberModel: IClubMember;
+  public memberForm: FormGroup;
+  private submitted = false;
+  public memberSince: string;
+  private memberNumber: any;
+  private zipcodeResult: string = "";
+  private cityName: string = "";
+  private stateAbbr: string = "";
+  private isEditMode: boolean;
+  public activities: any;
+  public selected = 'None';
+  public nextAvailableMemberNumber: number;
   private key: string;
 
   constructor(

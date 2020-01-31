@@ -5,9 +5,6 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Development server
 
 This application uses Firebase for REST services but does not use the Firebase SDK, just good old fashioned HTTP verbs.
-## Build
-
-Run `npm run build` to build the project for production. The build artifacts will be stored in the `dist/` directory. A production build hasn't been deployed to a remote server and tested yet.
 
 ## Running unit tests
 
