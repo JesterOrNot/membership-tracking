@@ -15,21 +15,9 @@ tasks:
             ng analytics off
     init: ng analytics off &&
           npm install
-    command: >
-      npm i -g json-server &&
-      json-server --watch db.json --host 0.0.0.0 --disable-host-check
   - command: >
-      gp await-port 3000 &&
-      npm i -g nodemon &&
-      nodemon server.js --host 0.0.0.0 --disable-host-check
-  - command: >
-      gp await-port 8000 &&
       ng serve --host 0.0.0.0 --disable-host-check
 
 ports:
-  - port: 3000
-    onOpen: ignore
-  - port: 8000
-    onOpen: ignore
   - port: 4200
     onOpen: open-preview
