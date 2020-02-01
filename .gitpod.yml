@@ -7,8 +7,6 @@ github:
     addComment: false
     addLabel: prebuild-in-gitpod
 
-# NG_CLI_ANALYTICS=ci
-
 tasks:
   - before: export NG_CLI_ANALYTICS=ci &&
             npm i -g @angular/cli &&
@@ -21,4 +19,4 @@ tasks:
 
 ports:
   - port: 4200
-    onOpen: open-preview
+    onOpen: open-browser
