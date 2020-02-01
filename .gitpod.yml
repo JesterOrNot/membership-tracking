@@ -21,4 +21,4 @@ tasks:
 
 ports:
   - port: 4200
-    onOpen: open-browser
+    onOpen: open-preview
