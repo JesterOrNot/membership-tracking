@@ -47,7 +47,7 @@ import { environment } from '../environments/environment';
     HttpClientModule,
     ReactiveFormsModule,
     DigitOnlyModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig, 'club-members-firebase')
+    AngularFireModule.initializeApp(environment.firebaseConfig, 'membership-tracking-firebase')
   ],
   exports: [
     PhonePipe,

@@ -24,6 +24,7 @@ export class MembersComponent implements OnInit {
   public edit_tooltip = "Edit this record";
   public delete_tooltip = "Delete this record";
   private isEditMode: boolean;
+  public isDataLoaded: boolean;
 
   ColumnMode = ColumnMode;
 
@@ -38,6 +39,7 @@ export class MembersComponent implements OnInit {
     this.httpService.getMembers().subscribe(members => {
       if (members != null) {
         this.rows = members;
+        this.isDataLoaded = true;
       }
     });
 
