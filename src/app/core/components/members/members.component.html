@@ -3,7 +3,6 @@
                  class="material striped expandable"
                  [rowHeight]="50"
                  [columnMode]="ColumnMode.force"
-                 [maxWidth]="1160"
                  [headerHeight]="50"
                  [footerHeight]="55"
                  [scrollbarH]="40"
@@ -34,7 +33,7 @@
                           prop="address"
                           [draggable]="false"
                           [minWidth]="70"
-                          [maxWidth]="80"
+                          [maxWidth]="120"
                           [sortable]="false"
                           [resizeable]="true">
       <ng-template let-row="row"
@@ -52,7 +51,7 @@
 
     <ngx-datatable-column name="Member ID#"
                           [minWidth]="100"
-                          [maxWidth]="130"
+                          [maxWidth]="170"
                           prop="memberId">
       <ng-template let-row="row"
                    ngx-datatable-cell-template>
@@ -62,7 +61,7 @@
 
     <ngx-datatable-column name="First Name"
                           [minWidth]="120"
-                          [maxWidth]="250"
+                          [maxWidth]="300"
                           prop="firstName">
       <ng-template let-row="row"
                    ngx-datatable-cell-template>
@@ -72,7 +71,7 @@
 
     <ngx-datatable-column name="Last Name"
                           [minWidth]="120"
-                          [maxWidth]="260"
+                          [maxWidth]="300"
                           prop="lastName">
       <ng-template let-row="row"
                    ngx-datatable-cell-template>
@@ -82,7 +81,7 @@
 
     <ngx-datatable-column name="Member Since"
                           [minWidth]="120"
-                          [maxWidth]="180"
+                          [maxWidth]="220"
                           prop="memberSince">
       <ng-template let-row="row"
                    ngx-datatable-cell-template>
@@ -92,7 +91,7 @@
 
     <ngx-datatable-column name="Favorite Activity"
                           [minWidth]="130"
-                          [maxWidth]="240"
+                          [maxWidth]="290"
                           prop="favoriteActivity">
       <ng-template let-row="row"
                    ngx-datatable-cell-template>
@@ -101,7 +100,7 @@
     </ngx-datatable-column>
 
     <ngx-datatable-column [minWidth]=30
-                          [maxWidth]=50>
+                          [maxWidth]=100>
       <ng-template let-row="row"
                    ngx-datatable-cell-template>
         <i class="fas fa-edit clickable"
@@ -111,7 +110,7 @@
     </ngx-datatable-column>
 
     <ngx-datatable-column [minWidth]=30
-                          [maxWidth]=50>
+                          [maxWidth]=100>
       <ng-template let-row="row"
                    ngx-datatable-cell-template>
         <i class="fas fa-trash-alt clickable"

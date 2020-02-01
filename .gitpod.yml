@@ -14,9 +14,10 @@ tasks:
             npm i -g @angular/cli &&
             ng analytics off
     init: ng analytics off &&
-          npm install
-    command: >
-      ng serve --host 0.0.0.0 --disable-host-check
+          npm install && npm run build
+    command: npm run start
+    # command: >
+    #   ng serve --host 0.0.0.0 --disable-host-check
 
 ports:
   - port: 4200
